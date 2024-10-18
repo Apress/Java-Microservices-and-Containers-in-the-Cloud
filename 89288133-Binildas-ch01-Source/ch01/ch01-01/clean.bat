@@ -1,0 +1,1 @@
+mvn -f .\02-ProductWeb -Dmaven.test.skip=true clean
