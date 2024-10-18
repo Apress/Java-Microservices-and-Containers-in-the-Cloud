@@ -1,0 +1,16 @@
+app:
+  name: app
+  group: app
+  replicaCount: 1
+  container:
+    image: image-name-here
+    pullPolicy: IfNotPresent
+    port: 8080
+    config: []
+    env: 
+      - key: key
+        value: value
+  service:
+    type: ClusterIP
+    #type: NodePort
+    port: 8080

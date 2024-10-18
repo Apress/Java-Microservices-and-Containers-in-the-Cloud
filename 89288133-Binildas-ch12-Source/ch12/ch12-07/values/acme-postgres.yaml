@@ -1,0 +1,9 @@
+postgres:
+  config:
+    data:
+      - key: POSTGRES_DB
+        value: productdb
+      - key: POSTGRES_USER
+        value: postgres
+      - key: POSTGRES_PASSWORD
+        value: postgre

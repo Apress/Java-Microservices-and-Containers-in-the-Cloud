@@ -1,0 +1,33 @@
+repositories:
+  - name: stable
+    url: https://charts.helm.sh/stable
+
+releases:
+  - name: postgres
+    chart: ./charts/postgres
+    values:
+      - ./values/acme-postgres.yaml
+
+  - name: adminer
+    chart: ./charts/app
+    values:
+      - ./values/adminer.yaml
+
+  - name: product-server
+    chart: ./charts/app
+    values:
+      - ./values/acme-product-server.yaml
+  
+  - name: product-web
+    chart: ./charts/app
+    values:
+      - ./values/acme-product-web.yaml
+
+  - name: ingress-backend
+    chart: stable/nginx-ingress
+    version: 1.36.0
+
+  - name: ingress-controller
+    chart: ./charts/ingress
+    values:
+      - ./values/ingress.yaml

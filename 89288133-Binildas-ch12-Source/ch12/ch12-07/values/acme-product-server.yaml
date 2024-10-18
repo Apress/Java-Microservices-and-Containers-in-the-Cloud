@@ -1,0 +1,11 @@
+app:
+  name: product-server
+  group: backend
+  container:
+    image: ecom/product-server:latest
+    imagePullPolicy: Never
+    config:
+      - name: postgres-config
+    env: 
+      - key: DB_SERVER
+        value: postgres
