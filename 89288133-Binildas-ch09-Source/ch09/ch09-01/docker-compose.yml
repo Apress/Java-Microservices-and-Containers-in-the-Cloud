@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+
+  db:
+    image: "postgres:15.3-alpine3.18"
+    container_name: postgres-docker
+    volumes:
+      - product-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=productdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgre
+    networks:
+      - ecom-network
+
+  server:
+    build: ./01-ProductServer
+    image: ecom/product-server
+    container_name: product-server
+    ports:
+      - "8081:8081"
+    depends_on:
+      - "db"
+    environment:
+      - DB_SERVER=postgres-docker:5432
+      - POSTGRES_DB=productdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgre
+    networks:
+      - ecom-network
+ 
+  web:
+    build: ./02-ProductWeb
+    image: ecom/product-web
+    container_name: product-web
+    depends_on:
+      - "server"
+    ports:
+      - "8080:8080"
+    environment:
+      - acme.PRODUCT_SERVICE_URL=http://product-server:8081/products
+
+    networks:
+      - ecom-network
+
+volumes:
+  product-data:
+
+networks:
+   ecom-network:
+ 
