@@ -1,0 +1,1 @@
+docker run -it -p 8080:8080 binildas/spring-boot-docker-k8s-helm:latest
