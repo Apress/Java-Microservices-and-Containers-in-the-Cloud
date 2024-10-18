@@ -1,0 +1,2 @@
+
+The credits for the sample in sub folder ./ch15-01/ is attributed to: Terraform Official Documentation
