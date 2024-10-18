@@ -1,0 +1,81 @@
+version: "3"
+
+services:
+
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - '2181:2181'
+    networks:
+      - ecom-network
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: kafka 
+    ports:
+      - '9092:9092'
+    networks:
+      - ecom-network
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+
+  db:
+    image: "postgres:15.3-alpine3.18"
+    container_name: postgres-docker
+    volumes:
+      - product-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=productdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgre
+    networks:
+      - ecom-network
+
+  server:
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    image: ecom/product-server
+    container_name: product-server
+    ports:
+      - "8081:8081"
+    depends_on:
+      - "db"
+    environment:
+      - DB_SERVER=postgres-docker:5432
+      - POSTGRES_DB=productdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgre
+      - spring.kafka.bootstrap-servers=kafka:9092
+    networks:
+      - ecom-network
+
+  web:
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+    image: ecom/product-web
+    container_name: product-web
+    depends_on:
+      - "server"
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.kafka.bootstrap-servers=kafka:9092
+    networks:
+      - ecom-network
+
+volumes:
+  product-data:
+
+networks:
+   ecom-network:
+ 
