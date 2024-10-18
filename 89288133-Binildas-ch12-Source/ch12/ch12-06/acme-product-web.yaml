@@ -1,0 +1,12 @@
+app:
+  name: product-web
+  group: frontend
+  container:
+    image: ecom/product-web:latest
+    imagePullPolicy: Never
+    env: 
+      - key: acme.PRODUCT_SERVICE_URL
+        # ISSUE: Read https://minikube.sigs.k8s.io/docs/drivers/docker/
+        # ingress, and ingress-dns addons are currently only supported on Linux
+        #value: http://products.acme.test/api/products
+        value: http://product-server:8080/api/products

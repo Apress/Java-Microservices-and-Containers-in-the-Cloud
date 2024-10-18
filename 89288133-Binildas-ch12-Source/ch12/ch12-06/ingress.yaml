@@ -1,0 +1,18 @@
+ingress:
+  hosts:
+    - host: adminer.acme.test
+      paths:
+        - path: /
+          backend:  
+            serviceName: adminer
+            servicePort: 8080
+    - host: products.acme.test
+      paths:
+        - path: /api/
+          backend:  
+            serviceName: product-server
+            servicePort: 8080
+        - path: /
+          backend:  
+            serviceName: product-web
+            servicePort: 8080

@@ -1,0 +1,16 @@
+apiVersion: v2
+name: app
+description: A Helm chart for Application Microservices
+type: application
+version: 0.1.0
+appVersion: 1.16.0
+keywords:
+  - app
+  - java
+  - javascript
+  - angular
+  - adminer
+home: https://github.com/acme/
+maintainers:
+  - name: Binildas
+    url: https://github.com/acme
