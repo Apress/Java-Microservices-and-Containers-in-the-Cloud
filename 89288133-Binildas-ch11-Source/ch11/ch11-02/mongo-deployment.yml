@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+#kind: Deployment
+metadata:
+  name: mongo-cluster
+  labels:
+    app: mongo
+spec:
+  replicas: 1
+  serviceName: "mongo"
+  selector:
+    matchLabels:
+      app: mongo
+  template:   
+     metadata:
+       labels:
+          app: mongo 
+       annotations:
+         sidecar.istio.io/inject: "false"
+     spec:
+        volumes:
+         - name: data-db
+           persistentVolumeClaim:
+            claimName: mongo-data-db
+        terminationGracePeriodSeconds: 10
+        containers:            
+          - name: mongo
+            image: mongo:4.2.24
+            volumeMounts:
+              - mountPath: /data/db
+                name: data-db
+                readOnly: false
+            ports:
+              - containerPort: 27017   
+            #imagePullPolicy: Never 
+  
