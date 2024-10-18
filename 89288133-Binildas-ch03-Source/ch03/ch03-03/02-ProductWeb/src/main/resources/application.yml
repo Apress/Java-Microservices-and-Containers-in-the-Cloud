@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: product-web
+  graphql:
+    graphiql:
+      enabled: true
+server:
+  port: 8080
+acme:
+  PRODUCT_SERVICE_URL: http://localhost:8081/products
+  PRODUCT_CATEGORY_URL: http://localhost:8081/category
+  PRODUCT_SERVICE_BY_CAT_URL: http://localhost:8081/productsbycat
