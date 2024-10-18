@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: "adminer.acme.test"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:  
+              service:
+                name: adminer
+                port: 
+                  number: 8080
+    - host: "products.acme.test"
+      http:
+        paths: 
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: product-web
+                port:
+                  number: 8080
+
