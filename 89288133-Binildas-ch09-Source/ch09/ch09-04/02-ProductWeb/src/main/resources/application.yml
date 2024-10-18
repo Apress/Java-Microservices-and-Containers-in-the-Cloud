@@ -1,0 +1,23 @@
+server:
+  application:
+    name: product-web
+  port: 8080
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      auto-offset-reset: earliest
+      group-id: product-web
+kafka:
+  topic:
+    product:
+      request: product-req-topic
+      reply: product-req-reply-topic
+  request-reply:
+    timeout-ms: 15000
+product:
+  topic:
+    request:
+      numPartitions: 5

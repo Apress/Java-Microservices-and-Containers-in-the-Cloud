@@ -1,0 +1,69 @@
+version: "3"
+
+services:
+
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - '2181:2181'
+    networks:
+      - ecom-network
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: kafka 
+    ports:
+      - '9092:9092'
+    networks:
+      - ecom-network
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper
+
+  db:
+    image: mongo:4.2.24
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - ecom-network
+
+  server:
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    image: ecom/product-server
+    container_name: product-server
+    ports:
+      - "8081:8081"
+    depends_on:
+      - "db"
+    environment:
+      - spring.data.mongodb.uri=mongodb://mongo:27017/test
+      - spring.kafka.bootstrap-servers=kafka:9092
+    networks:
+      - ecom-network
+
+  web:
+    build:
+      context: .
+      dockerfile: web.Dockerfile
+    image: ecom/product-web
+    container_name: product-web
+    depends_on:
+      - "server"
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.kafka.bootstrap-servers=kafka:9092
+    networks:
+      - ecom-network
+
+networks:
+   ecom-network:
+ 
