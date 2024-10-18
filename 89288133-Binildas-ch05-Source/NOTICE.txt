@@ -1,0 +1,3 @@
+
+The credits for the utility library in sub folder kafka-request-reply-util for this sample is attributed to: BJÖRN BESKOW from Callista Enterprise
+https://github.com/callistaenterprise/blog-synchronous-kafka/blob/master/LICENSE
