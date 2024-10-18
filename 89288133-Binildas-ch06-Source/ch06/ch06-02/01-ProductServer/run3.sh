@@ -1,0 +1,1 @@
+java -jar -Dserver.port=8085 -DDB_SERVER=127.0.0.1:5432 -DPOSTGRES_DB=productdb -DPOSTGRES_USER=postgres -DPOSTGRES_PASSWORD=postgre -Dspring.kafka.consumer.group-id=product-server ./target/Ecom-Product-Server-Microservice-0.0.1-SNAPSHOT.jar
