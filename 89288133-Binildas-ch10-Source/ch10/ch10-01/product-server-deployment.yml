@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-server
+  labels:
+    app: product-server
+    group: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-server
+  template:
+    metadata:
+      labels:
+        app: product-server
+    spec:
+      containers:
+      - name: product-server
+        image: ecom/product-server
+        ports:
+        - containerPort: 8081
+        imagePullPolicy: Never
+        env:
+          - name: spring.data.mongodb.uri
+            value: mongodb://mongo:27017/test

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-server
+  labels:
+    app: product-server
+    group: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-server
+  template:
+    metadata:
+      labels:
+        app: product-server
+      annotations:
+        sidecar.istio.io/inject: "false"
+    spec:
+      containers:
+      - name: product-server
+        image: ecom/product-server
+        ports:
+        - containerPort: 8081
+        imagePullPolicy: Never
+        envFrom:
+          - configMapRef:
+              name: postgres-config
+        env:
+          - name: DB_SERVER
+            value: postgres

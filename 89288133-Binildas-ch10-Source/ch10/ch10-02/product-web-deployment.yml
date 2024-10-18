@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-web
+  labels:
+    app: product-web
+    group: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-web
+  template:
+    metadata:
+      labels:
+        app: product-web
+      annotations:
+        sidecar.istio.io/inject: "false"
+    spec:
+      containers:
+      - name: product-web
+        image: ecom/product-web
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Never
+        env:
+          - name: acme.PRODUCT_SERVICE_URL
+            value: http://product-server:8081/products

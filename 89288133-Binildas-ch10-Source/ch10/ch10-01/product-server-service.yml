@@ -1,0 +1,30 @@
+# To restrict access of product-server within the cluster, use type: ClusteredIP (default)
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-server
+spec:
+  selector:
+     app: product-server
+  ports:
+    - protocol: TCP
+      port: 8081 
+      targetPort: 8081
+
+---
+
+# To test product-server connection from outside the cluster, use type: NodePort
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-server-nodeport
+spec:
+  selector:
+    app: product-server
+  ports:
+    - nodePort: 30002
+      port: 8081 
+      targetPort: 8081
+  type: NodePort

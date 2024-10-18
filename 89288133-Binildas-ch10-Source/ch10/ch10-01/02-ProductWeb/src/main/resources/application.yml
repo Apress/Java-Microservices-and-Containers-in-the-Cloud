@@ -1,0 +1,7 @@
+spring:
+    application:
+        name: product-web
+server:
+  port: 8080
+acme:
+  PRODUCT_SERVICE_URL: http://product-server:8081/products
