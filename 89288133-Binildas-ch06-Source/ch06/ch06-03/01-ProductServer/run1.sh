@@ -1,0 +1,1 @@
+java -jar -Dserver.port=8081 -Dspring.kafka.consumer.group-id=product-server1 -Dcom.acme.ecom.product.kafka.client.productlistener.sleeptimeout=2 ./target/Ecom-Product-Server-Microservice-0.0.1-SNAPSHOT.jar
