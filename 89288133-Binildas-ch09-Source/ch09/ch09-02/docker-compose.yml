@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+
+  db:
+    image: mongo:4.2.24
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "db-data:/data/db"
+    networks:
+      - ecom-network
+   
+  server:
+    build: ./01-ProductServer
+    image: ecom/product-server
+    container_name: product-server
+    ports:
+      - "8081:8081"
+    depends_on:
+      - "db"
+    networks:
+      - ecom-network
+    environment:
+      - spring.data.mongodb.uri=mongodb://192.168.64.6:27017/test
+
+  web:
+    build: ./02-ProductWeb
+    image: ecom/product-web
+    container_name: product-web
+    depends_on:
+      - "server"
+    ports:
+      - "8080:8080"
+    networks:
+      - ecom-network
+    environment:
+      - acme.PRODUCT_SERVICE_URL=http://192.168.64.6:8081/products
+    
+    
+volumes:
+  db-data:
+      driver: local
+      driver_opts:
+         o: bind
+         type: none
+         #device: /Users/binil/dockerbook/ch08-05/mongodata
+         device: /home/docker/binil/mongodata
+
+networks:
+   ecom-network:
+ 
