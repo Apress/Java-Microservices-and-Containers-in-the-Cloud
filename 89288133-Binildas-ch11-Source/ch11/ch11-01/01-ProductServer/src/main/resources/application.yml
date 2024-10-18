@@ -1,0 +1,36 @@
+server:
+  application:
+    name: product-server
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_SERVER}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer: 
+      auto-offset-reset: earliest
+      group-id: product-server
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+kafka:
+  topic:
+    product:
+      request: product-req-topic
+      reply: product-req-reply-topic
+  request-reply:
+    timeout-ms: 10000
+product:
+  topic:
+    request:
+      numPartitions: 5

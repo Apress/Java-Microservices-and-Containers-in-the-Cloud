@@ -1,0 +1,54 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+ xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+ xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext 
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+          http://www.liquibase.org/xml/ns/dbchangelog 
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+ <changeSet author="Binildas" id="product">
+  <createTable tableName="PRODUCT">
+   <column name="PRODUCTID" type="BIGINT">
+    <constraints primaryKey="true"
+     primaryKeyName="PRODUCT_PK" />
+   </column>
+   <column name="PRODNAME" type="VARCHAR(30)" />
+   <column name="CODE" type="VARCHAR(30)" />
+   <column name="TITLE" type="VARCHAR(60)" />
+   <column name="PRICE" type="DOUBLE" />
+  </createTable>
+ </changeSet>
+
+<changeSet author="Binildas" id="addAutoIncrement-product">  
+	<addAutoIncrement catalogName="cat"  
+		columnDataType="bigint"
+		columnName="PRODUCTID" 
+		defaultOnNull="false"
+		generationType="ALWAYS"
+		incrementBy="1"  
+		schemaName="public" 
+		startWith="1"  
+		tableName="PRODUCT"/>  
+</changeSet>
+
+ <changeSet author="Binildas" id="insert-product-01">
+  <insert tableName="PRODUCT">
+   <column name="PRODNAME" value="Kamsung D3" />
+   <column name="CODE" value="KAMSUNG-TRIOS" />
+   <column name="TITLE" value="Kamsung Trios 12 inch , black , 12 px ...." />
+   <column name="PRICE" valueNumeric ="12000" />
+  </insert>
+ </changeSet>
+
+ <changeSet author="Binildas" id="insert-product-02">
+  <insert tableName="PRODUCT">
+   <column name="PRODNAME" value="Lokia Pomia" />
+   <column name="CODE" value="LOKIA-POMIA" />
+   <column name="TITLE" value="Lokia 12 inch , white , 14px ...." />
+   <column name="PRICE" valueNumeric ="9000" />
+  </insert>
+ </changeSet>
+
+</databaseChangeLog>
